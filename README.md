@@ -14,8 +14,8 @@ Details:
 - User-Name, Passwort, URL, Port und Updateintervall sind konfigurierbar
 
 ChangeLog:
-1.1.3 - Behebt Login-Probleme in Verbindung mit Zabbix 2.0.4
-1.2   - Bugfixes (Update-Problems), Number of Problems is displayed in the icon
-1.3   - Bugfix (Wrong icon when there are no notifications)
+- 1.1.3 - Behebt Login-Probleme in Verbindung mit Zabbix 2.0.4
+- 1.2   - Bugfixes (Update-Problems), Number of Problems is displayed in the icon
+- 1.3   - Bugfix (Wrong icon when there are no notifications)
 
 Chrome Web Store: https://chrome.google.com/webstore/detail/zabbix-notifier/ikeijbmpddnkaeejokgifioccbcijjfo
