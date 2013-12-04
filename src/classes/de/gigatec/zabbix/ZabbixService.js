@@ -45,6 +45,7 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 			sortorder: 'DESC',
 			expandDescription: '1',
 			expandData: '1',
+			skipDependent: '1',
 			filter: {
 				value: '1'
 			}

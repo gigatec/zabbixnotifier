@@ -1,6 +1,6 @@
 {
 	"name": "Zabbix Notifier",
-	"version": "1.3",
+	"version": "1.4",
 	"manifest_version": 2,
 	"description": "Notifier for Zabbix.",
 	
