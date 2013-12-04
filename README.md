@@ -3,6 +3,9 @@ zabbixnotifier
 
 Zabbix Notifier for Google Chrome
 
+![
+](https://raw.github.com/gigatec/zabbixnotifier/master/screenshot.png)
+
 Funktionen: 
 Mit dieser Erweiterung werden aktuelle Statusmeldungen des Zabbix Monitoring-Systems direkt im Browser angezeigt. Störungen und Probleme werden so schnell und zuverlässig erkannt. 
 Auch eine Soundbenachrichtigung ist konfigurierbar. 
