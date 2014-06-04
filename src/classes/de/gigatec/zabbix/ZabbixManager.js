@@ -98,11 +98,15 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	 */
 	notifyUser: function() { var me = this;
 
-		if (webkitNotifications.createHTMLNotification !== undefined) {
-			var notification = webkitNotifications.createHTMLNotification('notification.html');
-			notification.show();
-			setTimeout(function() { notification.cancel();}, 5000);
-		}
+		chrome.notifications.create('notification',  {
+			type: "basic",
+			title: "Zabbix Notifier",
+			message: "There are new trigger events in your list!",
+			iconUrl: "images/icon128.png"
+		}, function() {
+			setTimeout(function() { chrome.notifications.clear('notification', function() {}); }, 5000);
+		});
+
 	}
 	
 });
