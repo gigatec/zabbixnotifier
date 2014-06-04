@@ -40,7 +40,7 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	
 		var config = $.getLocalConfig();
 		
-		me.zabbixService.getTriggerList(function(triggerList) {
+		me.zabbixService.getTriggerList(config, function(triggerList) {
 
 			$.log('refresh zabbix status');
 			me.zabbixStatus.updateTriggerList(triggerList);

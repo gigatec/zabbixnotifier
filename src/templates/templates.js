@@ -77,6 +77,16 @@ function program3(depth0,data) {
   
   return "checked=\"checked\"";}
 
+function program5(depth0,data) {
+  
+  
+  return "checked=\"checked\"";}
+
+function program7(depth0,data) {
+  
+  
+  return "checked=\"checked\"";}
+
   buffer += "<div id=\"header\">\n	<a target=\"_blank\" href=\"http://www.gigatec.de/\"><img id=\"logo\" src=\"images/logo_gigatec.png\" /></a> \n	<h1>Zabbix Notifier: Settings</h1>\n</div>\n\n<hr />\n\n<div id=\"settings\">\n	<form>\n		<div>\n			<label for=\"zabbixBase\">Zabbix Base: </label>\n			<input id=\"zabbixBase\" type=\"text\" value=\"";
   stack1 = depth0.data;
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.zabbixBase;
@@ -98,6 +108,16 @@ function program3(depth0,data) {
   stack1 = depth0.data;
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.playSound;
   stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">No</input>\n		</div>\n		<div>\n			<label for=\"hideAck\">Hide Ack Events: </label>\n			<input id=\"hideAck\" name=\"hideAck\" type=\"radio\" value=\"true\" ";
+  stack1 = depth0.data;
+  stack1 = stack1 == null || stack1 === false ? stack1 : stack1.hideAck;
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">Yes</input>\n			<input id=\"hideAck\" name=\"hideAck\" type=\"radio\" value=\"false\" ";
+  stack1 = depth0.data;
+  stack1 = stack1 == null || stack1 === false ? stack1 : stack1.hideAck;
+  stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(7, program7, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += ">No</input>\n		</div>\n		<div class=\"buttons\">\n			<input id=\"saveButton\" type=\"submit\" value=\"Save\" />\n			<input id=\"cancelButton\" type=\"button\" value=\"Cancel\" />\n		</div>\n	</form>\n</div>";
   return buffer;});

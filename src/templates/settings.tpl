@@ -28,6 +28,11 @@
 			<input id="playSound" name="playSound" type="radio" value="true" {{#if data.playSound}}checked="checked"{{/if}}>Yes</input>
 			<input id="playSound" name="playSound" type="radio" value="false" {{#unless data.playSound}}checked="checked"{{/unless}}>No</input>
 		</div>
+		<div>
+			<label for="hideAck">Hide Ack Events: </label>
+			<input id="hideAck" name="hideAck" type="radio" value="true" {{#if data.hideAck}}checked="checked"{{/if}}>Yes</input>
+			<input id="hideAck" name="hideAck" type="radio" value="false" {{#unless data.hideAck}}checked="checked"{{/unless}}>No</input>
+		</div>
 		<div class="buttons">
 			<input id="saveButton" type="submit" value="Save" />
 			<input id="cancelButton" type="button" value="Cancel" />

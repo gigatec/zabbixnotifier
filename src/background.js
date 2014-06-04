@@ -16,7 +16,8 @@ App = Ember.Application.create({
 				'zabbixUser': '',
 				'zabbixPass': '',
 				'playSound': 'true',
-				'interval': '60',
+				'hideAck': false,
+				'interval': '60'
 			});
 		}
 	

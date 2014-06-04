@@ -34,6 +34,7 @@ $(document).ready(function() {
 				'zabbixUser': $content.find('#zabbixUser').val(),
 				'zabbixPass': zabbixPass,
 				'playSound': $content.find('input[name="playSound"][value="true"]').attr('checked') ? true : false,
+				'hideAck': $content.find('input[name="hideAck"][value="true"]').attr('checked') ? true : false,
 				'interval': $content.find('#interval').val(),
 			});
 			App.zabbixManager.changeConfiguration();

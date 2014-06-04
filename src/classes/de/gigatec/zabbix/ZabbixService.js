@@ -25,7 +25,7 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 		    busername: '',       // User name for basic authentication
 		    bpassword: '',       // Password for basic authentication
 		    timeout: 5000,       // Request timeout (milli second)
-		    limit: 1000,         // Max data number for one request
+		    limit: 1000          // Max data number for one request
 		});
 		
 		me.jqzabbix.getApiVersion();
@@ -35,7 +35,7 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 	/**
 	 * get trigger list
 	 */
-	getTriggerList: function(handler) { var me = this;
+	getTriggerList: function(config, handler) { var me = this;
 
 		var params = {
 			output: 'extend',
@@ -45,11 +45,13 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 			sortorder: 'DESC',
 			expandDescription: '1',
 			expandData: '1',
-			skipDependent: '1',
 			filter: {
 				value: '1'
 			}
 		};
+		if (config['hideAck']) {
+			params['withUnacknowledgedEvents'] = true;
+		}
 		
 		me.jqzabbix.sendAjaxRequest('trigger.get', params, function(data) {
 			handler(data.result);
