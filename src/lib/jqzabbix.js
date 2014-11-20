@@ -36,21 +36,8 @@ var authid = null;
 var apiversion = null;
 var errormsg = null;
 
-// initialize default ajax options
-$.ajaxSetup({
-    contentType: 'application/json-rpc',
-    dataType: 'json',
-    type: 'POST',
-    async: false,
-    cache: false,
-    processData: false,
-    timeout: options.timeout,
-    url: options.url,
-});
-// end initialize
 
-
-function createAjaxOption(method, params, success, error) {
+function createAjaxOption(method, params, success, error, complete) {
 
     // check method option
     if (method === null || typeof method === 'undefined') {
@@ -85,44 +72,101 @@ function createAjaxOption(method, params, success, error) {
 
     // create AJAX option
     var ajaxOption = {
+        contentType: 'application/json-rpc',
+        dataType: 'json',
+        type: 'POST',
+        async: true,
+        cache: false,
+        processData: false,
+        timeout: options.timeout,
+        url: options.url,
         data: JSON.stringify(data),
         success: function(response, status) {
 
             // resuest error
             if (response === null) {
-                errormsg = 'Request error!';
+                errormsg = {
+                    data: 'Network error'
+                };
+                if (typeof error === 'function') {
+                    error();
+                }
             }
             else if ('error' in response) {
                 errormsg = response.error;
+                if (typeof error === 'function') {
+                    error();
+                }
             }
             
             // resuest success
             else {
 
+                // clear error message
+                errormsg = null;
+
                 // do success function
-                if (success) {
+                if (typeof success === 'function') {
                     success(response, status);
                 }
-                errormsg = '';
             }
         },
         error: function(response, status) {
-            errormsg = status + ' : ' + response.status + ' ' + response.statusText;
+
+            if (status === 'timeout') {
+                errormsg = 'Network timeout';
+            }
+            else if (response.status && response.statusText) {
+                errormsg = status + ' : ' + response.status + ' ' + response.statusText;
+            }
+            else {
+                errormsg = 'Unknown error';
+            }
+
+            if (errormsg && typeof error === 'function') {
+                error();
+            }
         },
         complete: function() {
-            if (errormsg && error) {
-                error();
+
+            if (typeof complete === 'function') {
+                complete();
             }
         }
     };
 
     // if use http basic authentication
     if (options.basicauth === true) {
-        ajaxOption.username = options.busername;
-        ajaxOption.password = options.bpassword;
+        var base64 = base64encode(options.busername + ':' + options.bpassword);
+        ajaxOption.beforeSend = function(xhr) {
+            xhr.setRequestHeader("Authorization", "Basic " + base64);
+        }
     }
 
     return ajaxOption;
+}
+
+function base64encode(string) {
+
+    var base64list = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    var t = '', p = -6, a = 0, i = 0, v = 0, c;
+
+    while ( (i < string.length) || (p > -6) ) {
+        if ( p < 0 ) {
+            if ( i < string.length ) {
+            c = string.charCodeAt(i++);
+            v += 8;
+            } else {
+                c = 0;
+            }
+            a = ((a&255)<<8)|(c&255);
+            p += 8;
+        }
+        t += base64list.charAt( ( v > 0 )? (a>>p)&63 : 64 )
+        p -= 6;
+        v -= 6;
+    }
+    return t;
 }
 
 this.init = function() {
@@ -149,12 +193,12 @@ this.isError = function() {
     }
 }
 
-this.sendAjaxRequest = function(method, params, success, error) {
+this.sendAjaxRequest = function(method, params, success, error, complete) {
 
-    $.ajax(createAjaxOption(method, params, success, error));
+    return $.ajax(createAjaxOption(method, params, success, error, complete));
 }
 
-this.getApiVersion = function(params, success, error) {
+this.getApiVersion = function(params, success, error, complete) {
 
     var method = 'apiinfo.version';
     var successMethod = function(response, status) {
@@ -165,13 +209,26 @@ this.getApiVersion = function(params, success, error) {
         }
     }
 
-    this.sendAjaxRequest(method, params, successMethod, error);
+    return this.sendAjaxRequest(method, params, successMethod, error, complete);
 }
 
-this.userLogin = function(params, success, error) {
+this.userLogin = function(params, success, error, complete) {
+
+    // reset rpcid
+    rpcid = 0;
 
     // method
-    var method = 'user.authenticate';
+    switch (apiversion) {
+    case '1.0':
+    case '1.1':
+    case '1.2':
+    case '1.3':
+        var method = 'user.authenticate';
+        break;
+    default:
+        var method = 'user.login';
+        break;
+    }
 
     var successMethod = function(response, status) {
         authid = response.result;
@@ -181,8 +238,8 @@ this.userLogin = function(params, success, error) {
         }
     }
 
-    this.sendAjaxRequest(method, params, successMethod, error);
+    return this.sendAjaxRequest(method, params, successMethod, error, complete);
 }
 
 } // end plugin
-})(jQuery); // function($)
+})(window.jQuery || window.Zepto); // function($)

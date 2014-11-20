@@ -13,7 +13,7 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 	/**
 	 * constructor
 	 */
-	init: function(baseUrl, username, password) { var me = this;
+	connect: function(baseUrl, username, password, cb) { var me = this;
 		
 		var apiUrl = baseUrl + 'api_jsonrpc.php';
 	
@@ -28,8 +28,9 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 		    limit: 1000          // Max data number for one request
 		});
 		
-		me.jqzabbix.getApiVersion();
-		me.jqzabbix.userLogin();
+		me.jqzabbix.getApiVersion(null, function() {
+			me.jqzabbix.userLogin(null, cb);
+		});
 	},
 
 	/**
@@ -58,6 +59,6 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 		}, function() {
 			handler([]);
 		});
-	},
+	}
 	
 });

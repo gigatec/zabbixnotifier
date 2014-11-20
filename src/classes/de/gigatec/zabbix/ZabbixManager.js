@@ -22,13 +22,16 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 		me.changeConfiguration();
 	},
 	
-	changeConfiguration: function() { var me = this;
+	changeConfiguration: function(cb) { var me = this;
 	
 		$.log('changeConfiguration');
 	
 		var config = $.getLocalConfig();
 		if (config['zabbixBase']) {
-			me.set('zabbixService', new App.de_gigatec_zabbix_ZabbixService(config['zabbixBase'], config['zabbixUser'], config['zabbixPass']));
+			if (!me.zabbixService) {
+				me.set('zabbixService', new App.de_gigatec_zabbix_ZabbixService());
+			}
+			me.zabbixService.connect(config['zabbixBase'], config['zabbixUser'], config['zabbixPass'], cb);
 			me.zabbixStatus.set('statusUrl', config['zabbixBase'] + 'tr_status.php?form_refresh=0&groupid=0&hostid=0&fullscreen=0')
 		}
 	},
@@ -39,15 +42,15 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	refreshZabbixStatus: function() { var me = this;
 	
 		var config = $.getLocalConfig();
-		
-		me.zabbixService.getTriggerList(config, function(triggerList) {
 
-			$.log('refresh zabbix status');
-			me.zabbixStatus.updateTriggerList(triggerList);
-			me.updateIconAndPlaySound(triggerList.length);
+		if (me.zabbixService) {
+			me.zabbixService.getTriggerList(config, function(triggerList) {
+				$.log('refresh zabbix status');
+				me.zabbixStatus.updateTriggerList(triggerList);
+				me.updateIconAndPlaySound(triggerList.length);
+			});
+		}
 
-		});
-		
 		// schedule next update
 		clearTimeout(me.timeoutObject);
 		me.set('timeoutObject', setTimeout(function() { me.refreshZabbixStatus(); }, config['interval'] * 1000));

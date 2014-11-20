@@ -37,8 +37,9 @@ $(document).ready(function() {
 				'hideAck': $content.find('input[name="hideAck"][value="true"]').attr('checked') ? true : false,
 				'interval': $content.find('#interval').val(),
 			});
-			App.zabbixManager.changeConfiguration();
-			App.zabbixManager.refreshZabbixStatus();
+			App.zabbixManager.changeConfiguration(function() {
+				App.zabbixManager.refreshZabbixStatus();
+			});
 			window.close();
 		});
 		
