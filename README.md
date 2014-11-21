@@ -22,5 +22,6 @@ ChangeLog:
 - 1.3   - Bugfix (Wrong icon when there are no notifications)
 - 1.4   - Dependency Checking (skipDependent: '1')
 - 1.5   - Hide Acknowledged Events (config.hideAck: 'true') & Reactivate Simple Notification Popup
+- 1.6   - Bugfix Zabbix 2.4 Authentication
 
 Chrome Web Store: https://chrome.google.com/webstore/detail/zabbix-notifier/ikeijbmpddnkaeejokgifioccbcijjfo
