@@ -5,6 +5,22 @@
 
 <hr />
 
+<div id="menu">
+	<label>Group : </label>
+	<select id="groupid">
+		<option value="">---</option>
+		{{#each data.grouphostList}}
+		<option value="{{this.groupid}}">{{this.name}}</option>
+		{{/each}}
+	</select>
+	|
+	<span class="link" id="settingsButton">Settings</span>
+	|
+	<span class="link" id="zabbixButton">Open Zabbix</span>
+</div>
+
+<hr />
+
 <table class="overview details">
 	<tr class="header">
 		<th>System</th>

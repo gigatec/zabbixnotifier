@@ -55,6 +55,7 @@ App.de_gigatec_zabbix_ZabbixStatus = Ember.Object.extend({
 			'disaster': 0,
 		});
 		me.set('triggerList', []);
+		me.set('grouphostList', []);
 		me.set('knownTriggers', []);
 		me.set('state', -1);
 		me.set('notifyUser', []);
@@ -111,6 +112,26 @@ App.de_gigatec_zabbix_ZabbixStatus = Ember.Object.extend({
 		state = me._getStateIfActive(5, state);
 		me.set('state', state);
 		me.set('notifyUser', notifyUser);
+	},
+
+
+
+	/**
+	 * update group list
+	 */
+	updateGrouphostList: function(list) { var me = this;
+
+		var grouphostList = [];
+		$(list).each(function(index, value) {
+
+			var item = {
+				'groupid':  value.groupid,
+				'name':		value.name,
+			};
+			grouphostList.push(item);
+		});
+		me.set('grouphostList', grouphostList);
+
 	},
 	
 	/*** PRIVATE METHODS ***/
