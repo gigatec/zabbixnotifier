@@ -23,7 +23,7 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	},
 	
 	changeConfiguration: function(cb) { var me = this;
-	
+
 		$.log('changeConfiguration');
 	
 		var config = $.getLocalConfig();
@@ -49,13 +49,21 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 				me.zabbixStatus.updateTriggerList(triggerList);
 				me.updateIconAndPlaySound(triggerList.length);
 			});
+
+			me.zabbixService.getHostgroupList(function(grouphostList) {
+				$.log('refresh zabbix group');
+				me.zabbixStatus.updateGrouphostList(grouphostList);
+			});
+
 		}
 
 		// schedule next update
 		clearTimeout(me.timeoutObject);
+
 		me.set('timeoutObject', setTimeout(function() { me.refreshZabbixStatus(); }, config['interval'] * 1000));
 	},
-	
+
+
 	/**
 	 * update icon and play sound
 	 */

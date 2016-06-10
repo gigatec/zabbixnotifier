@@ -25,7 +25,7 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 		    busername: '',       // User name for basic authentication
 		    bpassword: '',       // Password for basic authentication
 		    timeout: 5000,       // Request timeout (milli second)
-		    limit: 1000          // Max data number for one request
+		    limit: 1000,         // Max data number for one request
 		});
 		
 		me.jqzabbix.getApiVersion(null, function() {
@@ -50,11 +50,33 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 				value: '1'
 			}
 		};
+
+		if (config['groupid'] && config['groupid'].length > 0 ) {
+			params['groupids'] = config['groupid'].split(',');
+		}
+
 		if (config['hideAck']) {
 			params['withUnacknowledgedEvents'] = true;
 		}
 		
 		me.jqzabbix.sendAjaxRequest('trigger.get', params, function(data) {
+			handler(data.result);
+		}, function() {
+			handler([]);
+		});
+	},
+
+
+	/**
+	 * get Host Group list
+	 */
+	getHostgroupList: function(handler) { var me = this;
+
+		var params = {
+			sortfield: 'name'
+		};
+
+		me.jqzabbix.sendAjaxRequest('hostgroup.get', params, function(data) {
 			handler(data.result);
 		}, function() {
 			handler([]);
