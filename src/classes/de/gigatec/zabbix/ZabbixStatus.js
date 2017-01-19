@@ -91,6 +91,7 @@ App.de_gigatec_zabbix_ZabbixStatus = Ember.Object.extend({
 				'confirmed':     0,
 				'system':        value.hostname,
 				'name':          value.description,
+				'host': value.hosts[0].name
 			};
 			triggerList.push(item);
 			
