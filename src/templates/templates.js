@@ -48,7 +48,7 @@ function program3(depth0,data) {
   stack1 = depth0.priorityClass;
   stack1 = typeof stack1 === functionType ? stack1() : stack1;
   buffer += escapeExpression(stack1) + "\">\n		<td class=\"system\">";
-  stack1 = depth0.system;
+  stack1 = depth0.host;
   stack1 = typeof stack1 === functionType ? stack1() : stack1;
   buffer += escapeExpression(stack1) + "</td>\n		<td class=\"name\">";
   stack1 = depth0.name;
