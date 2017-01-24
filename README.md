@@ -24,6 +24,7 @@ ChangeLog:
 - 1.5   - Hide Acknowledged Events (config.hideAck: 'true') & Reactivate Simple Notification Popup
 - 1.6   - Bugfix Zabbix 2.4 Authentication
 - 1.6.1 - Add feature filter by group
+- 1.7   - Add support for zabbix 3.4, display the System Name
 
 Chrome Web Store: https://chrome.google.com/webstore/detail/zabbix-notifier/ikeijbmpddnkaeejokgifioccbcijjfo
 
@@ -32,4 +33,4 @@ Contributors:
 - skreuter
 - gigatec
 - Nicolas Berthe
-
+- interpeix
